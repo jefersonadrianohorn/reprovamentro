@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Média Geral</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .average {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .below-average {
+            color: #FF4136;
+        }
+
+        .average-range {
+            color: #FFDC00;
+        }
+
+        .exceptional {
+            color: #2ECC40;
+        }
+
+        .footer {
+            text-align: right;
+            margin-top: 120px;
+        }
+
+        .footer span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .footer span.icon {
+            margin-right: 10px;
+        }
+
+        .footer span.message {
+            font-size: 12px;
+        }
+
+        .clear-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #FFDC00;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .calculator-icon {
+            margin-right: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo da Média Geral</h1>
+
+        <form id="gradesForm">
+            <h2>Notas das Matérias</h2>
+            <input type="number" step="0.01" placeholder="GEOGRAFIA" id="grade1">
+            <input type="number" step="0.01" placeholder="HISTÓRIA" id="grade2">
+            <input type="number" step="0.01" placeholder="SOCIOLOGIA/FILOSOFIA" id="grade3">
+            <input type="number" step="0.01" placeholder="ARTE" id="grade4">
+            <input type="number" step="0.01" placeholder="EDUCAÇÃO FÍSICA" id="grade5">
+            <input type="number" step="0.01" placeholder="L.ESTRANG" id="grade6">
+            <input type="number" step="0.01" placeholder="LINGUA PORTUGUESA" id="grade7">
+            <input type="number" step="0.01" placeholder="BIOLOGIA" id="grade8">
+            <input type="number" step="0.01" placeholder="FÍSICA" id="grade9">
+            <input type="number" step="0.01" placeholder="QUÍMICA" id="grade10">
+            <input type="number" step="0.01" placeholder="MATEMÁTICA" id="grade11">
+            <input type="number" step="0.01" placeholder="OUTRA" id="grade12">
+
+            <button type="button" onclick="calculateAverage()"><i class="fas fa-calculator calculator-icon"></i>Calcular Média</button>
+        </form>
+
+        <div id="averageResult" class="average"></div>
+
+        <button class="clear-button" onclick="clearForm()"><i class="fas fa-trash"></i> Limpar</button>
+    </div>
+
+    <div class="footer">
+        <span class="icon"><i class="fas fa-info-circle"></i></span>
+        <span class="message">Software desenvolvido por Jeferson Adriano Horn em maio de 2023</span>
+
+    </div>
+
+    <script>
+        function calculateAverage() {
+            var grades = [];
+            var inputs = document.getElementsByTagName('input');
+            var validGrades = true;
+
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].value !== '') {
+                    var grade = parseFloat(inputs[i].value);
+                    if (isNaN(grade) || grade < 0 || grade > 10) {
+                        alert('Por favor, insira valores válidos de 0 a 10 para as notas.');
+                        validGrades = false;
+                        break;
+                    }
+                    grades.push(grade);
+                }
+            }
+
+            if (validGrades) {
+                var total = 0;
+                for (var j = 0; j < grades.length; j++) {
+                    total += grades[j];
+                }
+
+                var average = total / grades.length;
+                var averageResult = document.getElementById('averageResult');
+
+                averageResult.innerHTML = "Média: " + average.toFixed(2);
+
+                if (average < 6) {
+                    averageResult.className = "average below-average";
+                    averageResult.innerHTML += " (Abaixo da Média)";
+                } else if (average >= 6 && average < 8.5) {
+                    averageResult.className = "average average-range";
+                    averageResult.innerHTML += " (Na Média)";
+                } else {
+                    averageResult.className = "average exceptional";
+                    averageResult.innerHTML += " (Excepcional)";
+                }
+            }
+        }
+
+        function clearForm() {
+            var inputs = document.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].value = '';
+            }
+            var averageResult = document.getElementById('averageResult');
+            averageResult.innerHTML = '';
+            averageResult.className = 'average';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                calculateAverage();
+            } else if (event.key === 'l' || event.key === 'L') {
+                clearForm();
+            } else if (event.key === ' ') {
+                var inputs = document.getElementsByTagName('input');
+                var currentInput = document.activeElement;
+                var currentIndex = Array.prototype.indexOf.call(inputs, currentInput);
+
+                if (currentIndex < inputs.length - 1) {
+                    inputs[currentIndex + 1].focus();
+                    event.preventDefault();
+                } else {
+                    inputs[0].focus();
+                    event.preventDefault();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
