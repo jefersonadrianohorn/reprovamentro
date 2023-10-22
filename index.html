@@ -222,6 +222,7 @@
         </tbody>
     </table>
 <button id="botaoSalvar">Salvar Notas 💾 </button> <!-- Botão para salvar as notas -->
+    
   <script>
     // Função para calcular a situação, o déficit e a sobra
     function calcularSituacaoDeficitSobra() {
@@ -306,7 +307,7 @@ botaoSalvar.addEventListener("click", function() {
     // Carregar notas do armazenamento local quando a página é carregada
     carregarNotasDoLocalStorage();
 </script>
-
+ 
 
 <div class="explanation">
     <h2>Explicação dos Conceitos</h2>
@@ -314,6 +315,9 @@ botaoSalvar.addEventListener("click", function() {
     <p><strong>Déficit:</strong> O déficit representa a quantidade de pontos necessários para atingir a nota mínima de 24. Se a soma das notas for maior que 24, o déficit será zero. Caso contrário, o déficit será a diferença entre 24 e a soma das notas.</p>
     <p><strong>Sobra:</strong> A sobra representa a quantidade de pontos além da nota mínima de 24. Se a soma das notas for menor que 24, a sobra será zero. Caso contrário, a sobra será a diferença entre a soma das notas e 24.</p>
 </div>
+
+<a href="mediageral.html"><button>Calcular minha media bimestral</button></a>
+
 <footer>
     <i class="fas fa-info-circle"></i>
     Desenvolvido por Jeferson Adriano Horn
