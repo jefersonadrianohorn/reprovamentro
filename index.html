@@ -78,6 +78,9 @@
 </head>
 <body>
     <table>
+    
+
+
         <thead>
             <tr>
                 <th></th>
@@ -218,28 +221,28 @@
 
         </tbody>
     </table>
-
+<button id="botaoSalvar">Salvar Notas 💾 </button> <!-- Botão para salvar as notas -->
   <script>
     // Função para calcular a situação, o déficit e a sobra
     function calcularSituacaoDeficitSobra() {
-        const rows = document.querySelectorAll("tbody tr");
-        rows.forEach(row => {
-            const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
-            const bimestresPendentes = notas.some(nota => nota === 0);
-            const somaNotas = notas.reduce((acc, nota) => acc + nota, 0);
-            const deficit = 24 - somaNotas;
-            const sobra = somaNotas - 24;
-            let situacao = (bimestresPendentes && somaNotas < 24) ? "Pendente" : (deficit > 0 || somaNotas < 24) ? "Reprovado" : (somaNotas >= 24) ? "Aprovado" : "Pendente";
-            row.querySelector(".situacao").textContent = situacao;
-            row.querySelector(".deficit").textContent = deficit >= 0 ? deficit : 0;
-            row.querySelector(".sobra").textContent = sobra >= 0 ? sobra : 0;
+    const rows = document.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+        const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
+        const bimestresPendentes = notas.some(nota => nota === 0);
+        const somaNotas = notas.reduce((acc, nota) => acc + nota, 0);
+        const deficit = (24 - somaNotas).toFixed(2); // Arredonde o déficit para 2 casas decimais
+        const sobra = (somaNotas - 24).toFixed(2); // Arredonde a sobra para 2 casas decimais
+        let situacao = (bimestresPendentes && somaNotas < 24) ? "Pendente" : (deficit > 0 || somaNotas < 24) ? "Reprovado" : (somaNotas >= 24) ? "Aprovado" : "Pendente";
+        row.querySelector(".situacao").textContent = situacao;
+        row.querySelector(".deficit").textContent = deficit >= 0 ? deficit : 0;
+        row.querySelector(".sobra").textContent = sobra >= 0 ? sobra : 0;
 
-            // Adiciona classes de estilo com base na situação
-            row.querySelector(".situacao").classList.remove("aprovado", "reprovado", "pendente");
-            row.querySelector(".situacao").classList.add(situacao.toLowerCase());
-        });
-        salvarNotasNoLocalStorage(); // Salvar as notas no armazenamento local sempre que forem recalculadas
-    }
+        // Adiciona classes de estilo com base na situação
+        row.querySelector(".situacao").classList.remove("aprovado", "reprovado", "pendente");
+        row.querySelector(".situacao").classList.add(situacao.toLowerCase());
+    });
+    salvarNotasNoLocalStorage(); // Salvar as notas no armazenamento local sempre que forem recalculadas
+}
 
     // Função para limpar os campos de notas
     function limparCampos(icon) {
@@ -281,11 +284,11 @@
     }
 
     // Adicione um botão para salvar as notas no armazenamento local
-    const salvarNotasButton = document.createElement("button");
-    salvarNotasButton.textContent = "Salvar 💾";
-    salvarNotasButton.addEventListener("click", salvarNotasNoLocalStorage);
-    document.body.appendChild(salvarNotasButton);
-
+    const botaoSalvar = document.getElementById("botaoSalvar");
+botaoSalvar.addEventListener("click", function() {
+    salvarNotasNoLocalStorage();
+    alert("Notas salvas com sucesso!");
+});
     
 
     // Atualiza a situação, o déficit e a sobra quando uma nota é editada
