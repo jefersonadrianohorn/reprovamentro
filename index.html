@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<html>
+<head>
+    <title>Boletim Escolar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <meta charset="UTF-8">
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            font-family: 'Roboto'
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        td {
+            background-color: #fff;
+        }
+        .nota {
+            width: 50px;
+        }
+        .situacao, .deficit, .sobra {
+            font-weight: bold;
+        }
+        .aprovado {
+            color: green;
+        }
+        .reprovado {
+            color: red;
+        }
+        .pendente {
+            color: orange;
+        }
+        .clear-icon {
+            cursor: pointer;
+        }
+        button {
+        background-color: #4CAF50; /* Cor de fundo verde */
+        color: white; /* Cor do texto branco */
+        border: none; /* Sem borda */
+        padding: 10px 20px; /* Preenchimento interno */
+        margin: 0 auto; /* Centraliza horizontalmente */
+        display: block; /* Transforma os botões em elementos de bloco para aplicar margem automática */
+        cursor: pointer; /* Altera o cursor para mão ao passar sobre o botão */
+    }
+    .explanation {
+        background-color: #f2f2f2;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+        font-family: 'Roboto', sans-serif;
+        border: 1px solid #ccc;
+    }
+
+    /* Estilo para o título da explicação */
+    .explanation h2 {
+        font-size: 1.5em;
+        margin-top: 0;
+    }
+
+    /* Estilo para os parágrafos da explicação */
+    .explanation p {
+        margin: 10px 0;
+    }
+    
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Matéria</th>
+                <th>Bimestre 1</th>
+                <th>Bimestre 2</th>
+                <th>Bimestre 3</th>
+                <th>Bimestre 4</th>
+                <th>Situação</th>
+                <th>Déficit</th>
+                <th>Sobra</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Português -->
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Português</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <!-- Português -->
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Língua Estrangeira</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Artes</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Educação Física</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>História</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Geografia</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Filosofia/Sociologia</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Matemática</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Biologia</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Química</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+            <tr>
+                <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
+                <td>Física</td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td contenteditable="true" class="nota"></td>
+                <td class="situacao"></td>
+                <td class="deficit"></td>
+                <td class="sobra"></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+  <script>
+    // Função para calcular a situação, o déficit e a sobra
+    function calcularSituacaoDeficitSobra() {
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
+            const bimestresPendentes = notas.some(nota => nota === 0);
+            const somaNotas = notas.reduce((acc, nota) => acc + nota, 0);
+            const deficit = 24 - somaNotas;
+            const sobra = somaNotas - 24;
+            let situacao = (bimestresPendentes && somaNotas < 24) ? "Pendente" : (deficit > 0 || somaNotas < 24) ? "Reprovado" : (somaNotas >= 24) ? "Aprovado" : "Pendente";
+            row.querySelector(".situacao").textContent = situacao;
+            row.querySelector(".deficit").textContent = deficit >= 0 ? deficit : 0;
+            row.querySelector(".sobra").textContent = sobra >= 0 ? sobra : 0;
+
+            // Adiciona classes de estilo com base na situação
+            row.querySelector(".situacao").classList.remove("aprovado", "reprovado", "pendente");
+            row.querySelector(".situacao").classList.add(situacao.toLowerCase());
+        });
+        salvarNotasNoLocalStorage(); // Salvar as notas no armazenamento local sempre que forem recalculadas
+    }
+
+    // Função para limpar os campos de notas
+    function limparCampos(icon) {
+        const row = icon.parentElement.parentElement;
+        const notas = row.querySelectorAll(".nota");
+        notas.forEach(nota => {
+            nota.textContent = "";
+        });
+        calcularSituacaoDeficitSobra();
+    }
+
+    // Função para salvar as notas no armazenamento local
+    function salvarNotasNoLocalStorage() {
+        const rows = document.querySelectorAll("tbody tr");
+        const notasArray = [];
+        rows.forEach(row => {
+            const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
+            notasArray.push(notas);
+        });
+        const notasJSON = JSON.stringify(notasArray);
+        localStorage.setItem("notas", notasJSON);
+    }
+
+    // Função para carregar as notas do armazenamento local
+    function carregarNotasDoLocalStorage() {
+        const notasJSON = localStorage.getItem("notas");
+        if (notasJSON) {
+            const notasArray = JSON.parse(notasJSON);
+            const rows = document.querySelectorAll("tbody tr");
+            rows.forEach((row, rowIndex) => {
+                const notas = notasArray[rowIndex];
+                const notaElements = row.querySelectorAll(".nota");
+                notaElements.forEach((notaElement, notaIndex) => {
+                    notaElement.textContent = notas[notaIndex];
+                });
+            });
+            calcularSituacaoDeficitSobra();
+        }
+    }
+
+    // Adicione um botão para salvar as notas no armazenamento local
+    const salvarNotasButton = document.createElement("button");
+    salvarNotasButton.textContent = "Salvar 💾";
+    salvarNotasButton.addEventListener("click", salvarNotasNoLocalStorage);
+    document.body.appendChild(salvarNotasButton);
+
+    
+
+    // Atualiza a situação, o déficit e a sobra quando uma nota é editada
+    const notas = document.querySelectorAll(".nota");
+    notas.forEach(nota => {
+        nota.addEventListener("input", function() {
+            const notaValue = nota.textContent.replace(',', '.');
+            if (parseFloat(notaValue) > 10) {
+                nota.textContent = "10";
+            }
+            calcularSituacaoDeficitSobra();
+        });
+    });
+
+    // Carregar notas do armazenamento local quando a página é carregada
+    carregarNotasDoLocalStorage();
+</script>
+
+
+<div class="explanation">
+    <h2>Explicação dos Conceitos</h2>
+    <p><strong>Situação:</strong> A situação indica se o aluno foi aprovado, reprovado ou está pendente na matéria. Se todas as notas forem maiores ou iguais a 6 e a soma das notas for maior ou igual a 24, a situação será "Aprovado". Se houver notas menores que 6 ou a soma das notas for menor que 24, a situação será "Reprovado". Se houver notas em branco (zero) ou a soma das notas for menor que 24, a situação será "Pendente".</p>
+    <p><strong>Déficit:</strong> O déficit representa a quantidade de pontos necessários para atingir a nota mínima de 24. Se a soma das notas for maior que 24, o déficit será zero. Caso contrário, o déficit será a diferença entre 24 e a soma das notas.</p>
+    <p><strong>Sobra:</strong> A sobra representa a quantidade de pontos além da nota mínima de 24. Se a soma das notas for menor que 24, a sobra será zero. Caso contrário, a sobra será a diferença entre a soma das notas e 24.</p>
+</div>
+<footer>
+    <i class="fas fa-info-circle"></i>
+    Desenvolvido por Jeferson Adriano Horn
+</footer>
+</body>
+</html>
