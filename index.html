@@ -53,6 +53,7 @@
         margin: 0 auto; /* Centraliza horizontalmente */
         display: block; /* Transforma os botões em elementos de bloco para aplicar margem automática */
         cursor: pointer; /* Altera o cursor para mão ao passar sobre o botão */
+
     }
     .explanation {
         background-color: #f2f2f2;
@@ -73,13 +74,104 @@
     .explanation p {
         margin: 10px 0;
     }
+   
+    .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f44336; /* Cor de fundo vermelha */
+    color: rgb(255, 255, 255)55, 255, 255 ; /* Cor do texto branco */
+    padding: 10px;
+    text-align: center;
+    }
+.popup-content {
+    display: block;
+    margin: 0 auto;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: rgb(0, 53, 197);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
     
     </style>
 </head>
 <body>
+    
     <table>
     
-
+        <div <html>
+            <head>
+                <title>Aviso Importante</title>
+                <style>
+                    /* Estilos para o pop-up */
+                    .popup {
+                        display: none;
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #ffffff;
+                        padding: 20px;
+                        border: 1px solid #ccc;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                        z-index: 9999;
+                    }
+                    /* Estilos para o fundo escurecido */
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        z-index: 9998;
+                    }
+                </style>
+            </head>
+            <body>
+                <!-- Botão para mostrar o pop-up -->
+                <button id="mostrarPopup">Mostrar Aviso</button>
+                
+                <!-- Pop-up e fundo escurecido -->
+                <div class="popup" id="avisoPopup">
+                    <h2>Aviso Importante</h2>
+                    <p>Personalização de Disciplinas: Estamos felizes em anunciar a personalização de disciplinas em nosso site de cálculo de notas.</p>
+                    <p>Melhorias na Estrutura de Dados: Implementamos melhorias para cálculos mais precisos.</p>
+                    <p>Atenção para a Incompatibilidade de Notas Anteriores: Alguns usuários podem enfrentar problemas de incompatibilidade com notas anteriores.</p>
+                    <button id="fecharPopup">Fechar</button>
+                </div>
+                <div class="overlay" id="overlay"></div>
+            
+                <script>
+                    // JavaScript para mostrar e fechar o pop-up
+                    document.getElementById("mostrarPopup").addEventListener("click", function() {
+                        document.getElementById("avisoPopup").style.display = "block";
+                        document.getElementById("overlay").style.display = "block";
+                    });
+            
+                    document.getElementById("fecharPopup").addEventListener("click", function() {
+                        document.getElementById("avisoPopup").style.display = "none";
+                        document.getElementById("overlay").style.display = "none";
+                    });
+                </script>
+            </body>
+            </html>
+            
+        </div>
+        
+        
 
         <thead>
             <tr>
@@ -220,7 +312,10 @@
             </tr>
             <tr>
                 <td><i class="fas fa-trash clear-icon" onclick="limparCampos(this)"></i></td>
-                <td>Outra</td>
+                <td contenteditable="true" class="materia">
+                    Matéria
+                    <i class="fas fa-pencil-alt edit-icon" onclick="editarMateria(this)"></i>
+                </td>
                 <td contenteditable="true" class="nota"></td>
                 <td contenteditable="true" class="nota"></td>
                 <td contenteditable="true" class="nota"></td>
@@ -229,95 +324,108 @@
                 <td class="deficit"></td>
                 <td class="sobra"></td>
             </tr>
-
+            
+            
+            
 
         </tbody>
     </table>
 <button id="botaoSalvar">Salvar Notas 💾 </button> <!-- Botão para salvar as notas -->
     
   <script>
-    // Função para calcular a situação, o déficit e a sobra
-    function calcularSituacaoDeficitSobra() {
+   function calcularSituacaoDeficitSobra() {
     const rows = document.querySelectorAll("tbody tr");
     rows.forEach(row => {
         const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
         const bimestresPendentes = notas.some(nota => nota === 0);
         const somaNotas = notas.reduce((acc, nota) => acc + nota, 0);
-        const deficit = (24 - somaNotas).toFixed(2); // Arredonde o déficit para 2 casas decimais
-        const sobra = (somaNotas - 24).toFixed(2); // Arredonde a sobra para 2 casas decimais
+        const deficit = (24 - somaNotas).toFixed(2);
+        const sobra = (somaNotas - 24).toFixed(2);
         let situacao = (bimestresPendentes && somaNotas < 24) ? "Pendente" : (deficit > 0 || somaNotas < 24) ? "Reprovado" : (somaNotas >= 24) ? "Aprovado" : "Pendente";
         row.querySelector(".situacao").textContent = situacao;
         row.querySelector(".deficit").textContent = deficit >= 0 ? deficit : 0;
         row.querySelector(".sobra").textContent = sobra >= 0 ? sobra : 0;
-
-        // Adiciona classes de estilo com base na situação
         row.querySelector(".situacao").classList.remove("aprovado", "reprovado", "pendente");
         row.querySelector(".situacao").classList.add(situacao.toLowerCase());
     });
-    salvarNotasNoLocalStorage(); // Salvar as notas no armazenamento local sempre que forem recalculadas
+    salvarNotasNoLocalStorage();
 }
 
-    // Função para limpar os campos de notas
-    function limparCampos(icon) {
-        const row = icon.parentElement.parentElement;
-        const notas = row.querySelectorAll(".nota");
-        notas.forEach(nota => {
-            nota.textContent = "";
+function limparCampos(icon) {
+    const row = icon.parentElement.parentElement;
+    const notas = row.querySelectorAll(".nota");
+    const materiaCell = row.querySelector(".materia"); // Seleciona o elemento da matéria
+    notas.forEach(nota => {
+        nota.textContent = "";
+    });
+    materiaCell.textContent = ""; // Limpa o conteúdo da célula da matéria
+    calcularSituacaoDeficitSobra();
+}
+
+
+function salvarNotasNoLocalStorage() {
+    const rows = document.querySelectorAll("tbody tr");
+    const notasArray = [];
+    rows.forEach(row => {
+        const nome = row.querySelector("td:nth-child(2)").textContent;
+        const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
+        notasArray.push({ nome, notas });
+    });
+    const notasJSON = JSON.stringify(notasArray);
+    localStorage.setItem("notas", notasJSON);
+}
+
+function carregarNotasDoLocalStorage() {
+    const notasJSON = localStorage.getItem("notas");
+    if (notasJSON) {
+        const notasArray = JSON.parse(notasJSON);
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach((row, rowIndex) => {
+            const nome = notasArray[rowIndex].nome;
+            const notas = notasArray[rowIndex].notas;
+            const notaElements = row.querySelectorAll(".nota");
+            notaElements.forEach((notaElement, notaIndex) => {
+                notaElement.textContent = notas[notaIndex];
+            });
+            row.querySelector("td:nth-child(2)").textContent = nome;
         });
         calcularSituacaoDeficitSobra();
     }
+}
 
-    // Função para salvar as notas no armazenamento local
-    function salvarNotasNoLocalStorage() {
-        const rows = document.querySelectorAll("tbody tr");
-        const notasArray = [];
-        rows.forEach(row => {
-            const notas = Array.from(row.querySelectorAll(".nota")).map(nota => parseFloat(nota.textContent.replace(',', '.')) || 0);
-            notasArray.push(notas);
-        });
-        const notasJSON = JSON.stringify(notasArray);
-        localStorage.setItem("notas", notasJSON);
-    }
-
-    // Função para carregar as notas do armazenamento local
-    function carregarNotasDoLocalStorage() {
-        const notasJSON = localStorage.getItem("notas");
-        if (notasJSON) {
-            const notasArray = JSON.parse(notasJSON);
-            const rows = document.querySelectorAll("tbody tr");
-            rows.forEach((row, rowIndex) => {
-                const notas = notasArray[rowIndex];
-                const notaElements = row.querySelectorAll(".nota");
-                notaElements.forEach((notaElement, notaIndex) => {
-                    notaElement.textContent = notas[notaIndex];
-                });
-            });
-            calcularSituacaoDeficitSobra();
-        }
-    }
-
-    // Adicione um botão para salvar as notas no armazenamento local
-    const botaoSalvar = document.getElementById("botaoSalvar");
+const botaoSalvar = document.getElementById("botaoSalvar");
 botaoSalvar.addEventListener("click", function() {
     salvarNotasNoLocalStorage();
     alert("Notas salvas com sucesso!");
 });
-    
 
-    // Atualiza a situação, o déficit e a sobra quando uma nota é editada
-    const notas = document.querySelectorAll(".nota");
-    notas.forEach(nota => {
-        nota.addEventListener("input", function() {
-            const notaValue = nota.textContent.replace(',', '.');
-            if (parseFloat(notaValue) > 10) {
-                nota.textContent = "10";
-            }
-            calcularSituacaoDeficitSobra();
-        });
+const notas = document.querySelectorAll(".nota");
+notas.forEach(nota => {
+    nota.addEventListener("input", function() {
+        const notaValue = nota.textContent.replace(',', '.');
+        if (parseFloat(notaValue) > 10) {
+            nota.textContent = "10";
+        }
+        calcularSituacaoDeficitSobra();
     });
+});
 
-    // Carregar notas do armazenamento local quando a página é carregada
-    carregarNotasDoLocalStorage();
+carregarNotasDoLocalStorage();
+// Função para fechar o popup
+// Função para fechar o popup
+function fecharPopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none";
+}
+
+// Mostrar o popup quando a página carregar
+window.addEventListener("load", function() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "block";
+});
+
+
+
 </script>
  
 
